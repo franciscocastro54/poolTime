@@ -109,23 +109,24 @@ button{
     color: var(--text-color5);
 }
 
-.card .pause-btn, .card .stop-btn, .card .details-btn{
+.card .blue-button, .card .stop-btn, .card .details-btn{
     width: 32%;
     margin: 0;
+}
+
+.blue-button{
+    background: var(--btn-color2);
     color: var(--text-color3);
 }
 
-.card .pause-btn{
-    background: var(--btn-color2);
-}
-
-.pause-btn:hover{
+.blue-button:hover{
     background: var(--text-color3);
     color: var(--btn-color2);
 }
 
 .stop-btn{
     background: var(--btn-color3);
+    color: var(--text-color3);
 }
 
 .stop-btn:hover{
@@ -135,6 +136,7 @@ button{
 
 .details-btn{
     background: var(--btn-color1);
+    color: var(--text-color3);
 }
 
 .details-btn:hover{
@@ -227,4 +229,8 @@ button{
     background: var(--text-color3);
     color: var(--btn-color2);
     border: var(--btn-color2) solid 1px;
+}
+
+.window .add{
+    /* margin-bottom: 2rem; */
 }
