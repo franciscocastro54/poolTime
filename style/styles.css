@@ -234,3 +234,48 @@ button{
 .window .add{
     /* margin-bottom: 2rem; */
 }
+
+.window .total{
+    margin: 0 2.5rem 2.5rem 2.5rem;
+    width: 90%;
+    color: var(--text-color1);
+    background: white;
+    border-top: solid 1px var(--text-color1);
+    padding: 1rem 2rem 1rem 57%;
+}
+
+.window .tablaDetalles {
+    margin-bottom: 0;
+}
+
+.window .total th{
+    text-align: start;
+    width: 5rem;
+}
+
+.window .total td{
+    text-align: end;
+    width: 2rem;
+}
+
+.yellow-btn{
+    background: var(--btn-color1);
+    color: var(--text-color3);
+    height: 2rem;
+    padding: 0.4rem;
+    border-radius: 5px;
+    border: transparent solid 1px;
+    font-size: 0.8em;
+}
+
+.yellow-btn:hover{
+    background: var(--text-color3);
+    color: var(--btn-color1);
+
+
+    border:var(--btn-color1) solid 1px;
+}
+
+#total-historial{
+    padding-right: 1.4rem;
+}
