@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style/styles.css">
-    <script src='js/Main.js'></script>
+    <script  src='js/configTable.js'></script>
+    <script  src='js/Main.js'></script>
     <title>Pool-time</title>
 </head>
 
@@ -14,9 +15,9 @@
     <header>
         <ul>
             <li><a href="#inicio">Inicio</a></li>
-            <li><a href="#nuevoProducto">Modificar productos</a></li>
-            <li><a href="#historial">Historial</a></li>
-            <li><a href="#modificarTarifa">Modificar Tarifa</a></li>
+            <li><a href="#nuevoProducto" onclick="productconfigshow()">Modificar productos</a></li>
+            <li><a href="#historial" onclick="historialVentasshow()">Historial</a></li>
+            <li><a href="#modificarTarifa" onclick="Tarifashow()">Modificar Tarifa</a></li>
             <li><a id="signIn" href="#cerrarSesion">Cerrar Sesión</a></li>
         </ul>
     </header>
@@ -24,22 +25,10 @@
         <article id='article'>
 
             <h1>Mesas</h1>
-            <button id="configMesa" class="config-table">Modificar mesas</button>
+            <button id="configMesa" class="config-table" onclick="mesashow()">Modificar mesas</button>
             <div id="mesas" class="item-container">
 
-                <div class="card">
-                    <h2>Mesa 1</h2>
-                    <img class="card-photo" src="./img/table.jpg" alt="">
-                    <button id="agregar">Agregar producto</button>
-                    <p>Nombre de usuario: Jhon Doe</p>
-                    <p id='time'>Hora de inicio: 13:55</p>
-                    <p id='cobro'>Tiempo: 120 min 8 seg</p>
-                    <p>Total: $12.000</p>
-                    <button id="control" class="blue-button" onclick='IniciarTiempo("Mesa1")'>Iniciar</button>
-                    <button id="detener" class="stop-btn" onclick="">Detener</button>
-                    <button id="detalles" class="details-btn" onclick="detalleshow()">Detalle</button>
-
-                </div>
+               
 
             </div>
         </article>
@@ -47,6 +36,7 @@
     <footer class="footer">
 
     </footer>
+    <script>mesaCardshow()</script>
 </body>
 
 </html>
