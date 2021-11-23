@@ -17,7 +17,7 @@ const configTable = `<div class="window" id="configTable">
 
 
 const productList= `<div class="window" id="productList">
-<button id="cerrarVentana" onclick="productconfigclose()">x</button>
+<button id="cerrarVentana" onclick="closeWindow('productList')">x</button>
 <h2>Productos</h2>
 <button id="agregarProducto" class="add" onclick="registrarProductoshow()">Nuevo producto</button>
 <table id="Tabla_Producto">
