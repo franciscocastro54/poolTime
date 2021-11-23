@@ -90,7 +90,6 @@ const addProducts=`<div class="window" id="addProducts">
                         <td>$4.500</td>
                     </tr>
                 </table>
-                <button id="Productos" class="blue-button">Regresar</button>
                 <button id="guardarProducto" class="add">Guardar</button>
             </div>`
 
