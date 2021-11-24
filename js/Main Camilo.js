@@ -34,9 +34,6 @@ function productconfigclose() {
     document.getElementById('productList').parentNode.removeChild(document.getElementById('productList'))
 
 }
-function closeWindow(id){
-    document.getElementById(id).parentNode.removeChild(document.getElementById(id))
-}
 function editProductoshow(codigo) {
     const editProducto = document.createElement('div')
     editProducto.innerHTML = configProduct
@@ -65,20 +62,7 @@ function AgregarProductoshow(iddetalle) {
     const AgregarProducto = document.createElement('div')
     AgregarProducto.innerHTML = addProducts
     document.getElementById('article').appendChild(AgregarProducto)
-    for (producto in ProductList) {
-        document.getElementById('addnompro').innerHTML =
-            document.getElementById('addnompro').innerHTML +
-            `\n  <option value="${producto}">${ProductList[producto].Nombre}</option>`
-    }
 document.getElementById('guardarProducto').addEventListener("click",() =>AddPDetalle(iddetalle))
-document.getElementById('cantidad').oninput=changerselect
-document.getElementById('addnompro').oninput=changerselect
-}
-function changerselect(){
-   
-    document.getElementById('codProducto').innerHTML= document.getElementById('addnompro').value
-    document.getElementById('preProducto').innerHTML=parseInt(ProductList[ document.getElementById('addnompro').value].Precio)*
-    document.getElementById('cantidad').value
 }
 function AgregarProductoclose() {
     document.getElementById('addProducts').parentNode.removeChild(document.getElementById('addProducts'))
@@ -144,12 +128,18 @@ function historialVentasclose() {
     document.getElementById('historial').parentNode.removeChild(document.getElementById('historial'))
 }
 function detalleshow() {
-    const detalleshow = document.createElement('div')
-    detalleshow.innerHTML = detalle
-    document.getElementById('article').appendChild(detalleshow)
+    const detalle = document.createElement("div");
+    detalle.id = 'detalle';
+    detalle.className = 'window';
+    const article = document.getElementById('article');
+    const contenido = infoDetalles
+    detalle.innerHTML = contenido;
+    article.appendChild(detalle);
 }
 function detalleclose() {
-    document.getElementById('detalle').parentNode.removeChild(document.getElementById('detalle'))
+    const article = document.getElementById('article');
+    const detalle = document.getElementById('detalle');
+    article.removeChild(detalle);
 }
 
 function mesaCardshow() {
@@ -320,18 +310,8 @@ function eliminarMesa(nom) {
 
 
 function AddPDetalle(idCuenta){
-    let nombre=document.getElementById("addnompro").value
-    let  codigo=document.getElementById("codProducto").innerHTML
-    let cantidad=document.getElementById("cantidad").value
-    let precio= ProductList[codigo].Precio
-detallesList[idCuenta].Productos.push(JSON.parse(
-    `{"Nombre": "${nombre}",
-"Codigo":"${codigo}",
-"Cantidad": ${cantidad},
-"Precio": ${precio},
-"Total": ${parseInt(precio)*parseInt(cantidad)}}
-    `))
-console.log(detallesList)
+
+
 }
 
 

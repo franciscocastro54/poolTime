@@ -79,24 +79,24 @@ const addProducts=`<div class="window" id="addProducts">
                 <table>
                     <tr>
                         <th>Cantidad</th>
-                        <th>Código</th>
+                        
                         <th>Nombre</th>
+                        <th>Código</th>
                         <th>Precio unidad</th>
                     </tr>
                     <tr>
                         <td><input type="number" name="cantidad" id="cantidad"></td>
-                        <td>1245</td>
-                        <td>Promo 1</td>
-                        <td>$4.500</td>
+                        <td ><select name="addnompro" id="addnompro"></td>
+                        <td id="codProducto">----</td>
+                        <td id="preProducto">$----</td>
                     </tr>
                 </table>
-                <button id="Productos" class="blue-button">Regresar</button>
                 <button id="guardarProducto" class="add">Guardar</button>
             </div>`
 
 //Revisar
 const detalle = `<div class="window" id="detalle">
-                <button id="cerrarVentana">x</button>
+                <button id="cerrarVentana" onclick="detalleclose()">x</button>
                 <h2>Detalle</h2>
 
                 <table class="tablaDetalles">
