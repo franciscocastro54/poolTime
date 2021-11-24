@@ -354,7 +354,7 @@ function eliminarMesa(nom) {
 
 const cronometro = (nombreMesa) => setInterval(function () {
 
-    let segundos ++;
+    segundos ++;
     if ((segundos < 10) || (segundos == 0)) { segundos = "0" + segundos }
 
     if (segundos == 60) {
