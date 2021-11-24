@@ -10,7 +10,7 @@ function mesashow() {
 <td>${TarifaList[MesaList[nom].Tarifa].Nombre}</td>
 <td><p class="state-free">${MesaList[nom].Estado}</p></td>
 <td><button class="erase" id="eliminarMesa" onclick="eliminarMesa('${nom}')">Eliminar</button></td>`
-        document.getElementById("Tabla_Mesas").appendChild(addmesa)
+document.getElementById("Tabla_Mesas").appendChild(addmesa)
     }
 }
 function mesaclose() {
@@ -58,11 +58,10 @@ function registrarProductosclose() {
     productconfigclose()
     productconfigshow()
 }
-function AgregarProductoshow(iddetalle) {
+function AgregarProductoshow() {
     const AgregarProducto = document.createElement('div')
     AgregarProducto.innerHTML = addProducts
     document.getElementById('article').appendChild(AgregarProducto)
-document.getElementById('guardarProducto').addEventListener("click",() =>AddPDetalle(iddetalle))
 }
 function AgregarProductoclose() {
     document.getElementById('addProducts').parentNode.removeChild(document.getElementById('addProducts'))
@@ -148,21 +147,21 @@ function mesaCardshow() {
         mesaCardshow.innerHTML = ` <div class="card">
     <h2>${card}</h2>
     <img class="card-photo" src="./img/table.jpg" alt="">
-    <button id="${card}agregar">Agregar producto</button>
-    <p id='${card + "Cliente"}'>Nombre de Cliente:</p>
-    <p id='${card + "Horain"}'>Hora de inicio: --:--</p>
-    <p id='${card + "Tempo"}'>Tiempo: 0 min 0 seg</p>
-    <p id='${card + "Costo"}'>Total: $----</p>
-    <button id="${card}control" class="blue-button" onclick='IniciarTiempo("${card}")'>Iniciar</button>
-    <button id="${card}detener" class="stop-btn" onclick="">Detener</button>
-    <button id="${card}detalles" class="details-btn" onclick="detalleshow()">Detalle</button>
+    <button id="agregar" onclick="AgregarProductoshow()">Agregar producto</button>
+    <p>Nombre de usuario:</p>
+    <p id='time'>Hora de inicio: --:--</p>
+    <p id='cobro'>Tiempo: 0 min  seg</p>
+    <p>Total: $----</p>
+    <button id="control" class="blue-button" onclick='IniciarTiempo("${card}")'>Iniciar</button>
+    <button id="detener" class="stop-btn" onclick="">Detener</button>
+    <button id="detalles" class="details-btn" onclick="detalleshow()">Detalle</button>
     </div>`
         document.getElementById('mesas').appendChild(mesaCardshow)
     }
 }
 
 function mesaCardClose() {
-    document.getElementById('mesas').innerHTML = "";
+    document.getElementById('mesas').innerHTML="";
 
 }
 function addmesashow() {
@@ -179,7 +178,7 @@ function addmesaclose() {
     document.getElementById('addMesa').parentNode.removeChild(document.getElementById('addMesa'))
 
 }
-function modmesashow(nom) {
+function modmesashow(nom){
     const modmesashow = document.createElement('div')
     modmesashow.innerHTML = modMesa
     document.getElementById('article').appendChild(modmesashow)
@@ -188,11 +187,11 @@ function modmesashow(nom) {
             document.getElementById('tarifaselect').innerHTML +
             `\n  <option value="${tarifa}">${TarifaList[tarifa].Nombre}</option>`
     }
-    document.getElementById("nombre").value = nom
-    document.getElementById('tarifaselect').value = MesaList[nom].Tarifa
-    document.getElementById('guardarProducto').addEventListener("click", () => modificarMesa(nom))
+document.getElementById("nombre").value=nom
+document.getElementById('tarifaselect').value=MesaList[nom].Tarifa
+document.getElementById('guardarProducto').addEventListener("click",()=>modificarMesa(nom))
 }
-function modmesaClose() {
+function modmesaClose(){
     document.getElementById('modMesa').parentNode.removeChild(document.getElementById('modMesa'))
 
 }
@@ -279,7 +278,7 @@ function modificarMesa(nom) {
     let nombre = document.getElementById("nombre").value
     let precio = document.getElementById("tarifaselect").value
 
-    if (nombre && precio && MesaList[nom].Estado == "Vacia") {
+    if (nombre&& precio && MesaList[nom].Estado=="Vacia") {
         delete MesaList[nom]
         MesaList = Object.assign(MesaList, JSON.parse(`{"${nombre}" :{ "Precio":${TarifaList[precio].Precio},"Tarifa" : "${precio}","Estado":"Vacia","Cliente": ""}}`));
         console.log(MesaList)
@@ -293,7 +292,7 @@ function modificarMesa(nom) {
 
 }
 function eliminarMesa(nom) {
-    if (MesaList[nom].Estado == "Vacia") {
+    if (MesaList[nom].Estado=="Vacia") {
         delete MesaList[nom]
         mesaCardClose()
         mesaCardshow()
@@ -309,49 +308,22 @@ function eliminarMesa(nom) {
 
 
 
-function AddPDetalle(idCuenta){
 
-
-}
 
 
 
 //Registro de tiempo
-let detallesList = {}
+let contadores = {}
 function IniciarTiempo(nombreMesa) {
     const date = new Date();
-    detallesList = Object.assign(detallesList, JSON.parse(`{"${nombreMesa}" : {
-        "HoraInicio":${date.getTime()},
-        "HoraTermino":null,
-        "Cliente":"${prompt("Ingrese nombre del cliente", "Sin nombre")}",
-        "Encargado": null,
-        "Productos":[],
-        "Tarifa":${MesaList[nombreMesa].Precio},
-        "IdActualizacion":null
-}}`));
-    document.getElementById(nombreMesa + "Horain").innerHTML = 'Hora de inicio: ' + date.getHours() + ":" + date.getMinutes()
+    contadores = Object.assign(contadores, JSON.parse(`{"${nombreMesa}" : ${date.getTime()}}`));
+    document.getElementById('time').innerHTML = 'Hora de inicio: ' + date.getHours() + ":" + date.getMinutes()
     //document.getElementById('control').addEventListener('click',()=>PausarTiempo(nombreMesa))
-    document.getElementById(nombreMesa + 'control').innerHTML = 'Pausar'
-    document.getElementById(nombreMesa + 'control').parentNode.replaceChild(document.getElementById(nombreMesa + 'control').cloneNode(true), document.getElementById(nombreMesa + 'control'))
-    document.getElementById(nombreMesa + 'control').onclick = () => { };
-    document.getElementById(nombreMesa + 'detener').addEventListener('click', () => DetenerTiempo(nombreMesa))
-    document.getElementById(nombreMesa + "Cliente").innerHTML = `Nombre de Cliente:${detallesList[nombreMesa].Cliente}`
-    console.log(detallesList)
-    detallesList[nombreMesa].IdActualizacion = setInterval(() => actualizartemporizador(nombreMesa), 500);
-    document.getElementById(nombreMesa + 'agregar').addEventListener('click', () => AgregarProductoshow(nombreMesa))
+    document.getElementById('control').innerHTML = 'Pausar'
+    document.getElementById('control').parentNode.replaceChild(document.getElementById('control').cloneNode(true), document.getElementById('control'))
+    document.getElementById('control').onclick = () => { };
+    document.getElementById('detener').addEventListener('click', () => DetenerTiempo(nombreMesa))
 
-
-}
-function actualizartemporizador(nombreMesa) {
-
-    let time = detallesList[nombreMesa].HoraInicio;
-    let date = new Date(parseInt(time));
-
-    date = new Date(Date.now() - date.getTime());
-    console.log(detallesList[nombreMesa].Tarifa * date.getMinutes);
-    document.getElementById(nombreMesa + "Tempo").innerHTML = 'Tiempo: ' + Math.trunc(date.getTime() / 60000) + 'Min ' + Math.trunc((date.getTime() % 60000) / 1000) + 'seg'
-    document.getElementById(nombreMesa + "Costo").innerText =
-        `Total: $${detallesList[nombreMesa].Tarifa * (Math.trunc(date.getTime() / 60000))}`
 
 }
 function PausarTiempo(nombreMesa) {
@@ -360,9 +332,13 @@ function PausarTiempo(nombreMesa) {
 
 }
 function DetenerTiempo(nombreMesa) {
-    clearInterval(detallesList[nombreMesa].IdActualizacion)
-    document.getElementById(nombreMesa + 'agregar').parentNode.replaceChild(document.getElementById(nombreMesa + 'agregar').cloneNode(true), document.getElementById(nombreMesa + 'agregar'))
-    document.getElementById(nombreMesa + 'detener').parentNode.replaceChild(document.getElementById(nombreMesa + 'detener').cloneNode(true), document.getElementById(nombreMesa + 'detener'))
-    document.getElementById(nombreMesa + 'control').innerHTML = 'Iniciar'
-    document.getElementById(nombreMesa + 'control').addEventListener('click', () => IniciarTiempo(nombreMesa))
+    let time = contadores[nombreMesa];
+    let date = new Date(parseInt(time));
+    console.log(date.getTime());
+    date = new Date(Date.now() - date.getTime());
+
+    document.getElementById('cobro').innerHTML = 'Tiempo: ' + Math.trunc(date.getTime() / 60000) + 'Min ' + Math.trunc((date.getTime() % 60000) / 1000) + 'seg'
+    document.getElementById('detener').parentNode.replaceChild(document.getElementById('detener').cloneNode(true), document.getElementById('detener'))
+    document.getElementById('control').innerHTML = 'Iniciar'
+    document.getElementById('control').addEventListener('click', () => IniciarTiempo(nombreMesa))
 }
