@@ -139,14 +139,116 @@ function historialVentasshow() {
     const historialVentasshow = document.createElement('div')
     historialVentasshow.innerHTML = historialVentas
     document.getElementById('article').appendChild(historialVentasshow)
+  let TotalResult=0
+    for(var i=0 ;i<historialList.length;i++){
+    Fecha=new Date(historialList[i].HoraInicio)
+    document.getElementById('HistorialVentas').innerHTML+=`
+    <tr>
+    <td>${Fecha.getDate() + "/"+( Fecha.getMonth()+1)+"/"+Fecha.getFullYear()}</td>
+    <td>${Fecha.getHours()+":"+Fecha.getMinutes()}</td>
+    <td>${historialList[i].Cliente}</td>
+    <td><button class="yellow-btn" onclick="detalleHistorialshow(${i})">Detalle</button></td>
+    <td>$${historialList[i].Total}</td>
+</tr>
+    `
+TotalResult+=    parseInt(historialList[i].Total)
+
+}
+document.getElementById('total-historial').innerHTML="$"+TotalResult
 }
 function historialVentasclose() {
     document.getElementById('historial').parentNode.removeChild(document.getElementById('historial'))
 }
-function detalleshow() {
+function detalleHistorialshow(idHistorial){
     const detalleshow = document.createElement('div')
     detalleshow.innerHTML = detalle
     document.getElementById('article').appendChild(detalleshow)
+ document.getElementById('tablaDetalles')
+  let Total=0; 
+  for(var i=0;i<historialList[idHistorial].Productos.length;i++){
+      let aux=historialList[idHistorial].Productos[i]
+      document.getElementById('tablaDetalles').innerHTML=document.getElementById('tablaDetalles').innerHTML+`
+<tr>
+<td>${aux.Cantidad}</td>
+<td>${aux.Codigo}</td>
+<td>${aux.Nombre}</td>
+<td>$${aux.Precio}</td>
+<td>$${aux.Total}</td>
+</tr>
+`
+Total+=aux.Total
+    }  
+
+    let date = new Date(parseInt(historialList[idHistorial].HoraInicio));
+    date = new Date(Date.now() - date.getTime());
+    document.getElementById('tablaDetalles').innerHTML=document.getElementById('tablaDetalles').innerHTML+`
+    <tr>
+    <td>${date.getMinutes()}</td>
+    <td>----</td>
+    <td>Tiempo(min)</td>
+    <td>$${historialList[idHistorial].Tarifa}</td>
+    <td>$${parseInt(historialList[idHistorial].Tarifa)*parseInt(historialList[idHistorial].Minutos)}</td>
+    </tr>
+    `
+    Total+=parseInt(historialList[idHistorial].Tarifa)*parseInt(historialList[idHistorial].Minutos);
+document.getElementById('result').innerHTML= `
+<tr>
+<th>neto</th><td id="neto">$${Total*1.19}</td>
+</tr>
+<tr>
+<th>iva 19%</th><td id="iva">$${Total*0.19}</td>
+</tr>
+<tr>
+<th>Total</th><td id="total">$${Total}</td>
+</tr>
+`
+
+
+}
+function detalleshow(iddetalle) {
+    const detalleshow = document.createElement('div')
+    detalleshow.innerHTML = detalle
+    document.getElementById('article').appendChild(detalleshow)
+ document.getElementById('tablaDetalles')
+  let Total=0; 
+  for(var i=0;i<detallesList[iddetalle].Productos.length;i++){
+      let aux=detallesList[iddetalle].Productos[i]
+      document.getElementById('tablaDetalles').innerHTML=document.getElementById('tablaDetalles').innerHTML+`
+<tr>
+<td>${aux.Cantidad}</td>
+<td>${aux.Codigo}</td>
+<td>${aux.Nombre}</td>
+<td>$${aux.Precio}</td>
+<td>$${aux.Total}</td>
+</tr>
+`
+Total+=aux.Total
+    }  
+
+    let date = new Date(parseInt(detallesList[iddetalle].HoraInicio));
+    date = new Date(Date.now() - date.getTime());
+    document.getElementById('tablaDetalles').innerHTML=document.getElementById('tablaDetalles').innerHTML+`
+    <tr>
+    <td>${date.getMinutes()}</td>
+    <td>----</td>
+    <td>Tiempo(min)</td>
+    <td>$${detallesList[iddetalle].Tarifa}</td>
+    <td>$${parseInt(detallesList[iddetalle].Tarifa)*parseInt(detallesList[iddetalle].Minutos)}</td>
+    </tr>
+    `
+    Total+=parseInt(detallesList[iddetalle].Tarifa)*parseInt(detallesList[iddetalle].Minutos);
+document.getElementById('result').innerHTML= `
+<tr>
+<th>neto</th><td id="neto">$${Total*1.19}</td>
+</tr>
+<tr>
+<th>iva 19%</th><td id="iva">$${Total*0.19}</td>
+</tr>
+<tr>
+<th>Total</th><td id="total">$${Total}</td>
+</tr>
+`
+
 }
 function detalleclose() {
     document.getElementById('detalle').parentNode.removeChild(document.getElementById('detalle'))
@@ -165,7 +267,7 @@ function mesaCardshow() {
     <p id='${card + "Costo"}'>Total: $----</p>
     <button id="${card}control" class="blue-button" onclick='IniciarTiempo("${card}")'>Iniciar</button>
     <button id="${card}detener" class="stop-btn" onclick="">Detener</button>
-    <button id="${card}detalles" class="details-btn" onclick="detalleshow()">Detalle</button>
+    <button id="${card}detalles" class="details-btn" onclick="detalleshow('${card}')">Detalle</button>
     </div>`
         document.getElementById('mesas').appendChild(mesaCardshow)
     }
@@ -320,8 +422,8 @@ function eliminarMesa(nom) {
 
 
 function AddPDetalle(idCuenta){
-    let nombre=document.getElementById("addnompro").value
     let  codigo=document.getElementById("codProducto").innerHTML
+    let nombre=ProductList[codigo].Nombre
     let cantidad=document.getElementById("cantidad").value
     let precio= ProductList[codigo].Precio
 detallesList[idCuenta].Productos.push(JSON.parse(
@@ -338,15 +440,18 @@ console.log(detallesList)
 
 //Registro de tiempo
 let detallesList = {}
+let historialList = []
 function IniciarTiempo(nombreMesa) {
     const date = new Date();
     detallesList = Object.assign(detallesList, JSON.parse(`{"${nombreMesa}" : {
         "HoraInicio":${date.getTime()},
         "HoraTermino":null,
+        "Minutos": 0,
         "Cliente":"${prompt("Ingrese nombre del cliente", "Sin nombre")}",
         "Encargado": null,
         "Productos":[],
         "Tarifa":${MesaList[nombreMesa].Precio},
+        "Total": 0,
         "IdActualizacion":null
 }}`));
     document.getElementById(nombreMesa + "Horain").innerHTML = 'Hora de inicio: ' + date.getHours() + ":" + date.getMinutes()
@@ -359,8 +464,6 @@ function IniciarTiempo(nombreMesa) {
     console.log(detallesList)
     detallesList[nombreMesa].IdActualizacion = setInterval(() => actualizartemporizador(nombreMesa), 500);
     document.getElementById(nombreMesa + 'agregar').addEventListener('click', () => AgregarProductoshow(nombreMesa))
-
-
 }
 function actualizartemporizador(nombreMesa) {
 
@@ -368,7 +471,8 @@ function actualizartemporizador(nombreMesa) {
     let date = new Date(parseInt(time));
 
     date = new Date(Date.now() - date.getTime());
-    console.log(detallesList[nombreMesa].Tarifa * date.getMinutes);
+    detallesList[nombreMesa].Minutos=date.getMinutes()
+    console.log(parseInt(detallesList[nombreMesa].Tarifa) * date.getMinutes);
     document.getElementById(nombreMesa + "Tempo").innerHTML = 'Tiempo: ' + Math.trunc(date.getTime() / 60000) + 'Min ' + Math.trunc((date.getTime() % 60000) / 1000) + 'seg'
     document.getElementById(nombreMesa + "Costo").innerText =
         `Total: $${detallesList[nombreMesa].Tarifa * (Math.trunc(date.getTime() / 60000))}`
@@ -377,7 +481,6 @@ function actualizartemporizador(nombreMesa) {
 function PausarTiempo(nombreMesa) {
     console.log('pausar' + nombreMesa)
     console.log(nombreMesa)
-
 }
 function DetenerTiempo(nombreMesa) {
     clearInterval(detallesList[nombreMesa].IdActualizacion)
@@ -385,4 +488,16 @@ function DetenerTiempo(nombreMesa) {
     document.getElementById(nombreMesa + 'detener').parentNode.replaceChild(document.getElementById(nombreMesa + 'detener').cloneNode(true), document.getElementById(nombreMesa + 'detener'))
     document.getElementById(nombreMesa + 'control').innerHTML = 'Iniciar'
     document.getElementById(nombreMesa + 'control').addEventListener('click', () => IniciarTiempo(nombreMesa))
+
+let Total=0
+for(var i=0;i<detallesList[nombreMesa].Productos.length;i++){
+    let aux=detallesList[nombreMesa].Productos[i]
+Total+=aux.Total
+  }  
+  let date = new Date(parseInt(detallesList[nombreMesa].HoraInicio));
+  date = new Date(Date.now() - date.getTime());
+  Total+=parseInt(detallesList[nombreMesa].Tarifa)*date.getMinutes();
+  detallesList[nombreMesa].Total=Total
+
+  historialList.push(detallesList[nombreMesa])
 }

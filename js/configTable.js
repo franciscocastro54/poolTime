@@ -82,7 +82,7 @@ const addProducts=`<div class="window" id="addProducts">
                         
                         <th>Nombre</th>
                         <th>Código</th>
-                        <th>Precio unidad</th>
+                        <th>Costo</th>
                     </tr>
                     <tr>
                         <td><input type="number" name="cantidad" id="cantidad"></td>
@@ -99,7 +99,7 @@ const detalle = `<div class="window" id="detalle">
                 <button id="cerrarVentana" onclick="detalleclose()">x</button>
                 <h2>Detalle</h2>
 
-                <table class="tablaDetalles">
+                <table class="tablaDetalles" id="tablaDetalles">
                     <tr>
                         <th>Cantidad</th>
                         <th>Código</th>
@@ -107,41 +107,12 @@ const detalle = `<div class="window" id="detalle">
                         <th>Precio unitario</th>
                         <th>Total</th>
                     </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>1245</td>
-                        <td>Promo 1</td>
-                        <td>$4.500</td>
-                        <td>$13.500</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>1245</td>
-                        <td>Promo 2</td>
-                        <td>$8.500</td>
-                        <td>$17.000</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>1245</td>
-                        <td>Promo 3</td>
-                        <td>$10.500</td>
-                        <td>$10.500</td>
-                    </tr>
+          
                 </table>
                 <table class="total" id="result">
-                    <tr>
-                        <th>neto</th><td id="neto">$41.000</td>
-                    </tr>
-                    <tr>
-                        <th>iva 19%</th><td id="iva">$41.000</td>
-                    </tr>
-                    <tr>
-                        <th>Total</th><td id="total">$41.000</td>
-                    </tr>
+            
                 </table>
-                <button id="Productos" class="blue-button">Regresar</button>
-                <button id="guardarProducto" class="add">Guardar</button>
+              
             </div>`
 
 const tarifas=`<div class="window" id="tarifas">
@@ -218,7 +189,7 @@ const signIn=`<div class="window" id="signIn">
 const historialVentas= `<div class="window" id="historial">
 <button id="cerrarVentana" onclick="historialVentasclose()">x</button>
 <h2>Historial de ventas</h2>
-<table class="tablaDetalles">
+<table class="tablaDetalles" id="HistorialVentas">
     <tr>
         <th>Fecha</th>
         <th>Hora</th>
@@ -226,29 +197,10 @@ const historialVentas= `<div class="window" id="historial">
         <th>Detalle</th>
         <th>Total</th>
     </tr>
-    <tr>
-        <td>01/01/21</td>
-        <td>17:30</td>
-        <td>Jhon Doe</td>
-        <td><button class="yellow-btn">Detalle</button></td>
-        <td>$25.500</td>
-    </tr>
-    <tr>
-        <td>01/01/21</td>
-        <td>17:30</td>
-        <td>Jhon Doe</td>
-        <td><button class="yellow-btn">Detalle</button></td>
-        <td>$25.500</td>
-    </tr>
-    <tr>
-        <td>01/01/21</td>
-        <td>17:30</td>
-        <td>Jhon Doe</td>
-        <td><button class="yellow-btn">Detalle</button></td>
-        <td>$25.500</td>
-    </tr>
+   
+   
 </table>
-<table class="total" id="result">
+<table class="total" id="historialresult">
     <tr>
         <th>Total</th><td id="total-historial">$41.000</td>
     </tr>
