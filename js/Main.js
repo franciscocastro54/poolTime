@@ -91,10 +91,10 @@ function Tarifashow() {
         let addTarifaList = document.createElement("tr")
         addTarifaList.innerHTML =
             `<td><button class="edit" id="editarTarifa" onclick="modTarifashow(${codtarifa})">Editar</button></td>
-    <td>${codtarifa}</td>
-    <td>${TarifaList[codtarifa].Nombre}</td>
-    <td>${TarifaList[codtarifa].Precio}</td>
-    <td><button class="erase" id="eliminarTarifa" onclick="eliminarTarifa(${codtarifa})">Eliminar</button></td>`
+            <td>${codtarifa}</td>
+            <td>${TarifaList[codtarifa].Nombre}</td>
+            <td>${TarifaList[codtarifa].Precio}</td>
+            <td><button class="erase" id="eliminarTarifa" onclick="eliminarTarifa(${codtarifa})">Eliminar</button></td>`
         document.getElementById("tabla_Tarifa").appendChild(addTarifaList)
     }
 }
@@ -318,6 +318,8 @@ function AgregarProducto() {
     let flag = () => { for (cod in ProductList) { if (cod == codigo) return false } return true }
     if (codigo && nombre && precio && flag()) {
         ProductList = Object.assign(ProductList, JSON.parse(`{"${codigo}" : { "Nombre": "${nombre}", "Precio": ${precio}}}`));
+        sessionStorage.setItem('productList', JSON.stringify(ProductList));
+        console.log(sessionStorage)
         console.log(ProductList)
         registrarProductosclose()
     }
@@ -328,6 +330,7 @@ function ModificarProducto() {
     let precio = document.getElementById("precio").value
     if (nombre, precio) {
         ProductList = Object.assign(ProductList, JSON.parse(`{"${codigo}" : {"Nombre": "${nombre}", "Precio": ${precio}}}`));
+        sessionStorage.setItem('productList', JSON.stringify(ProductList));
         console.log(ProductList)
         editProductoclose()
     }
@@ -335,6 +338,7 @@ function ModificarProducto() {
 function eliminarProducto(codigo) {
 
     delete ProductList[codigo]
+    sessionStorage.setItem('productList', JSON.stringify(ProductList));
     productconfigclose()
     productconfigshow()
 
@@ -347,6 +351,7 @@ function agregarTarifa() {
     let flag = () => { for (cod in TarifaList) { if (cod == codigo) return false } return true }
     if (codigo && nombre && precio && flag()) {
         TarifaList = Object.assign(TarifaList, JSON.parse(`{"${codigo}" : { "Nombre": "${nombre}", "Precio": ${precio}}}`));
+        sessionStorage.setItem('tarifaList', JSON.stringify(TarifaList));
         console.log(TarifaList)
         configTarifaclose()
     }
@@ -357,6 +362,7 @@ function modificarTarifa() {
     let precio = document.getElementById("precio").value
     if (nombre, precio) {
         TarifaList = Object.assign(ProductList, JSON.parse(`{"${codigo}" : {"Nombre": "${nombre}", "Precio": ${precio}}}`));
+        sessionStorage.setItem('tarifaList', JSON.stringify(TarifaList));
         console.log(TarifaList)
         modTarifaclose()
     }
@@ -365,6 +371,7 @@ function modificarTarifa() {
 function eliminarTarifa(codigo) {
 
     delete TarifaList[codigo]
+    sessionStorage.setItem('tarifaList', JSON.stringify(TarifaList));
     Tarifaclose()
     Tarifashow()
 }
@@ -376,8 +383,11 @@ function agregarMesa() {
     let nombre = document.getElementById("nombre").value
     let precio = document.getElementById("tarifaselect").value
     let flag = () => { for (nom in MesaList) { if (nom == nombre) return false } return true }
+    console.log(MesaList)
+    
     if (nombre && precio && flag()) {
         MesaList = Object.assign(MesaList, JSON.parse(`{"${nombre}" :{ "Precio":${TarifaList[precio].Precio},"Tarifa" : "${precio}","Estado":"Vacia","Cliente": ""}}`));
+        sessionStorage.setItem('mesaList', JSON.stringify(MesaList))
         console.log(MesaList)
         mesaCardClose()
         mesaCardshow()
@@ -394,6 +404,7 @@ function modificarMesa(nom) {
     if (nombre && precio && MesaList[nom].Estado == "Vacia") {
         delete MesaList[nom]
         MesaList = Object.assign(MesaList, JSON.parse(`{"${nombre}" :{ "Precio":${TarifaList[precio].Precio},"Tarifa" : "${precio}","Estado":"Vacia","Cliente": ""}}`));
+        sessionStorage.setItem('mesaList', JSON.stringify(MesaList));
         console.log(MesaList)
         mesaCardClose()
         mesaCardshow()
@@ -407,6 +418,7 @@ function modificarMesa(nom) {
 function eliminarMesa(nom) {
     if (MesaList[nom].Estado == "Vacia") {
         delete MesaList[nom]
+        sessionStorage.setItem('mesaList', JSON.stringify(MesaList));
         mesaCardClose()
         mesaCardshow()
         mesaclose()
@@ -433,6 +445,7 @@ detallesList[idCuenta].Productos.push(JSON.parse(
 "Precio": ${precio},
 "Total": ${parseInt(precio)*parseInt(cantidad)}}
     `))
+    sessionStorage.setItem('detallesList', JSON.stringify(detallesList));
 console.log(detallesList)
 }
 
@@ -454,6 +467,7 @@ function IniciarTiempo(nombreMesa) {
         "Total": 0,
         "IdActualizacion":null
 }}`));
+sessionStorage.setItem('detallesList', JSON.stringify(detallesList));
     document.getElementById(nombreMesa + "Horain").innerHTML = 'Hora de inicio: ' + date.getHours() + ":" + date.getMinutes()
     //document.getElementById('control').addEventListener('click',()=>PausarTiempo(nombreMesa))
     document.getElementById(nombreMesa + 'control').innerHTML = 'Pausar'
@@ -498,6 +512,6 @@ Total+=aux.Total
   date = new Date(Date.now() - date.getTime());
   Total+=parseInt(detallesList[nombreMesa].Tarifa)*date.getMinutes();
   detallesList[nombreMesa].Total=Total
-
+  sessionStorage.setItem('detallesList', JSON.stringify(detallesList));
   historialList.push(detallesList[nombreMesa])
 }
