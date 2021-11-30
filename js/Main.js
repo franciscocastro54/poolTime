@@ -445,6 +445,7 @@ detallesList[idCuenta].Productos.push(JSON.parse(
 "Precio": ${precio},
 "Total": ${parseInt(precio)*parseInt(cantidad)}}
     `))
+alert("Producto agregado")
     sessionStorage.setItem('detallesList', JSON.stringify(detallesList));
 console.log(detallesList)
 }
@@ -480,6 +481,11 @@ sessionStorage.setItem('detallesList', JSON.stringify(detallesList));
     document.getElementById(nombreMesa + 'agregar').addEventListener('click', () => AgregarProductoshow(nombreMesa))
 }
 function actualizartemporizador(nombreMesa) {
+    let Total=0; 
+    for(var i=0;i<detallesList[nombreMesa].Productos.length;i++){
+        let aux=detallesList[nombreMesa].Productos[i]
+  Total+=aux.Total
+      }  
 
     let time = detallesList[nombreMesa].HoraInicio;
     let date = new Date(parseInt(time));
@@ -489,7 +495,10 @@ function actualizartemporizador(nombreMesa) {
     console.log(parseInt(detallesList[nombreMesa].Tarifa) * date.getMinutes);
     document.getElementById(nombreMesa + "Tempo").innerHTML = 'Tiempo: ' + Math.trunc(date.getTime() / 60000) + 'Min ' + Math.trunc((date.getTime() % 60000) / 1000) + 'seg'
     document.getElementById(nombreMesa + "Costo").innerText =
-        `Total: $${detallesList[nombreMesa].Tarifa * (Math.trunc(date.getTime() / 60000))}`
+        `Total: $${(detallesList[nombreMesa].Tarifa * (Math.trunc(date.getTime() / 60000)))+Total}`
+ 
+
+
 
 }
 function PausarTiempo(nombreMesa) {
