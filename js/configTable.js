@@ -46,7 +46,7 @@ const configProduct = `<div class="window" id="configProduct">
 
     <td><p type="text" name="codigo" id="codigo"></p></td>
     <td><input type="text" name="nombre" id="nombre" placeholder="ej: Promo 5"></td>
-    <td><input type="number" name="precio" id="precio" placeholder="ej: 10.000"></td>
+    <td><input type="number" name="precio" id="precio" placeholder="ej: 10.000" min="0"></td>
     </tr>
 </table>
 
@@ -64,9 +64,9 @@ const registrarProducto = `<div class="window" id="registrarProducto">
     </tr>
     <tr>
 
-        <td><input type="number" name="codigo" id="codigo" placeholder="ej: 1516"></td>
+        <td><input type="number" name="codigo" id="codigo" placeholder="ej: 1516" min="0"></td>
         <td><input type="text" name="nombre" id="nombre" placeholder="ej: Promo 5"></td>
-        <td><input type="number" name="precio" id="precio" placeholder="ej: 10.000"></td>
+        <td><input type="number" name="precio" id="precio" placeholder="ej: 10.000" min="0"></td>
     </tr>
 </table>
 
@@ -85,7 +85,7 @@ const addProducts=`<div class="window" id="addProducts">
                         <th>Costo</th>
                     </tr>
                     <tr>
-                        <td><input type="number" name="cantidad" id="cantidad"></td>
+                        <td><input type="number" name="cantidad" id="cantidad" min="0"></td>
                         <td ><select name="addnompro" id="addnompro"></td>
                         <td id="codProducto">----</td>
                         <td id="preProducto">$----</td>
@@ -143,9 +143,9 @@ const configTarifa=`<div class="window" id="configTarifa">
     </tr>
     <tr>
 
-        <td><input type="number" name="codigo"  id="codigo" placeholder="ej: 1516"></td>
+        <td><input type="number" name="codigo"  id="codigo" placeholder="ej: 1516" min="0"></td>
         <td><input type="text" name="nombre" id="nombre" placeholder="ej: Tarifa 2"></td>
-        <td><input type="number" name="precio" id="precio" placeholder="ej: 150"></td>
+        <td><input type="number" name="precio" id="precio" placeholder="ej: 150" min="0"></td>
     </tr>
 </table>
 <button id="guardarProducto" class="add" onclick="agregarTarifa()">Guardar</button>
@@ -163,7 +163,7 @@ const modTarifa=`<div class="window" id="configTarifa">
 
         <td><p type="text" name="codigo" id="codigo"></p></td>
         <td><input type="text" name="nombre" id="nombre" placeholder="ej: Tarifa 2"></td>
-        <td><input type="number" name="precio" id="precio" placeholder="ej: 150"></td>
+        <td><input type="number" name="precio" id="precio" placeholder="ej: 150" min="0"></td>
     </tr>
 </table>
 <button id="guardarProducto" class="add" onclick="modificarTarifa()">Guardar</button>
